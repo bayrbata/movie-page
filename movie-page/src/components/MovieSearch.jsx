@@ -6,7 +6,7 @@ export default function MovieSearch() {
   const [query, setQuery] = useState("");
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
   async function fetchMovie() {
     if (!query) return;
