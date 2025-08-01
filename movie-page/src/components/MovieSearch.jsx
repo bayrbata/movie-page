@@ -15,7 +15,9 @@ export default function MovieSearch() {
 
     try {
       const res = await fetch(
-        `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}`,
+        `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
+          query
+        )}`,
         {
           method: "GET",
           headers: {
@@ -41,7 +43,7 @@ export default function MovieSearch() {
     setLoading(false);
   }
 
-  console.log(movie)
+  console.log(movie);
 
   return (
     <div className="movie-search">
@@ -58,15 +60,16 @@ export default function MovieSearch() {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {movie && movie.map((m) =>
-        <div key={m.id}>
-          <h3>{m.title}</h3>
-          <img
-            src={`https://image.tmdb.org/t/p/w200${m.poster_path}`}
-            alt={m.title}
-          />
-        </div>
-      )}
+      {movie &&
+        movie.map((m) => (
+          <div key={m.id}>
+            <h3>{m.title}</h3>
+            <img
+              src={`https://image.tmdb.org/t/p/w200${m.poster_path}`}
+              alt={m.title}
+            />
+          </div>
+        ))}
     </div>
   );
 }

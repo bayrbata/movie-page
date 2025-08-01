@@ -6,6 +6,6 @@ export default function home() {
     <div style={{ padding: "1rem" }}>
       <h1>Movie Search</h1>
       <MovieSearch />
-    </div>  
+    </div>
   );
 }
