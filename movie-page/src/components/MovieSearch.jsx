@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NDIyNGFmOTY4NmE0ODk4ZDJkZDAxNzAzOTZiYWNkMiIsIm5iZiI6MTc1NDAxMjIyMi40ODgsInN1YiI6IjY4OGMxYTNlYWRmNzBkMWE0N2RlNWQzZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TVygl_OJ89n86BONTja2adF-zYysvG3suEkM6R4uh9k";
+const API_TOKEN = import.meta.env.VITE_API_TOKEN;
 
 export default function MovieSearch() {
   const [query, setQuery] = useState("");
@@ -40,6 +40,8 @@ export default function MovieSearch() {
 
     setLoading(false);
   }
+
+  console.log(movie)
 
   return (
     <div className="movie-search">
