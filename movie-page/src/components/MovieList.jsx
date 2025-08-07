@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/index.css";
 
 const API_TOKEN = import.meta.env.VITE_API_TOKEN;
 
-export default function MovieSearch({ query }) {
+export default function MovieList({ url }) {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,23 +16,17 @@ export default function MovieSearch({ query }) {
 
   useEffect(() => {
     async function fetchMovie() {
-      if (!query) return;
       setLoading(true);
       setError(null);
 
       try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
-            query
-          )}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${API_TOKEN}`,
-              Accept: "application/json",
-            },
-          }
-        );
+        const res = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${API_TOKEN}`,
+            Accept: "application/json",
+          },
+        });
 
         const data = await res.json();
 
@@ -50,10 +45,10 @@ export default function MovieSearch({ query }) {
     }
 
     fetchMovie();
-  }, [query]);
+  }, []);
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+    <div className="movie-scroll-container">
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {movie &&
