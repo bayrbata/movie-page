@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-const API_TOKEN = import.meta.env.VITE_API_TOKEN;
+import useSearchStore from "../store/useSearchStore";
+import "../styles/movieSearch.css";
 
 export default function MovieSearch({ query }) {
-  const [movie, setMovie] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { resultsCache, loading, error, searchMovies } = useSearchStore();
   const navigate = useNavigate();
 
   function handleClick(m) {
@@ -14,76 +12,31 @@ export default function MovieSearch({ query }) {
   }
 
   useEffect(() => {
-    async function fetchMovie() {
-      if (!query) return;
-      setLoading(true);
-      setError(null);
+    searchMovies(query);
+  }, [query, searchMovies]);
 
-      try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
-            query
-          )}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${API_TOKEN}`,
-              Accept: "application/json",
-            },
-          }
-        );
-
-        const data = await res.json();
-
-        if (!data.results || data.results.length === 0) {
-          setError("No movies found.");
-          setMovie(null);
-        } else {
-          setMovie(data.results);
-        }
-      } catch (err) {
-        setError("Failed to fetch data.");
-        setMovie(null);
-      }
-
-      setLoading(false);
-    }
-
-    fetchMovie();
-  }, [query]);
+  const movies = resultsCache[query] || [];
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+    <div className="movieSearchWrapper">
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {movie &&
-        movie.map((m) => (
-          <div
-            key={m.id}
-            style={{
-              width: "150px",
-              textAlign: "center",
-              margin: "0 10px",
-            }}
-          >
-            <img
-              src={`https://image.tmdb.org/t/p/w300${m.poster_path}`}
-              alt={m.title}
-              style={{
-                width: "150px",
-                height: "225px",
-                objectFit: "cover",
-                borderRadius: "8px",
-                cursor: "pointer",
-                transition: "transform 0.3s ease-in-out",
-              }}
-              onClick={() => handleClick(m)}
-              onError={(e) => {
-                e.target.src =
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoWcWg0E8pSjBNi0TtiZsqu8uD2PAr_K11DA&s";
-              }}
-            />
-            <h5 style={{ fontSize: "14px", marginTop: "0.5rem" }}>{m.title}</h5>
+      {error && <p className="errorText">{error}</p>}
+      {movies &&
+        movies.map((m) => (
+          <div key={m.id} className="movieCard">
+            {m.poster_path && (
+              <img
+                src={`https://image.tmdb.org/t/p/w300${m.poster_path}`}
+                alt={m.title}
+                className="movieImage"
+                onClick={() => handleClick(m)}
+                onError={(e) => {
+                  e.target.src =
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoWcWg0E8pSjBNi0TtiZsqu8uD2PAr_K11DA&s";
+                }}
+              />
+            )}
+            <h5 className="movieTitle">{m.title}</h5>
           </div>
         ))}
     </div>

@@ -12,120 +12,61 @@
   padding: "1rem";
 }
 
-.movie-scroll-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  padding: 1rem;
-  scroll-behavior: smooth;
+.home{
+  margin:auto;
 }
 
-.movie-scroll-container::-webkit-scrollbar {
-  display: none;
-}
-
-.movie-scroll-container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.bottom-left-text {
+.hero {
   position: relative;
-  bottom: -100px;
-  left: -380px;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 20%;
+  left: 5%;
   color: white;
-  font-size: 18px;
+  max-width: 500px;
 }
 
-.trailer-scroll-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  padding-bottom: 1rem;
-  scroll-snap-type: x mandatory;
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
-.trailer-scroll-container iframe {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+.hero-content p {
+  font-size: 1rem;
+  opacity: 0.9;
 }
 
-.trailer-scroll-container::-webkit-scrollbar {
-  display: none;
+.buttons {
+  margin-top: 1rem;
 }
 
-.trailer-scroll-container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.button-group {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.wishlist-button,
-.rate-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.5rem;
+.details-btn {
+  background: #f39c12;
   border: none;
-  border-radius: 12px;
-  background-color: #2a2a2a;
-  color: white;
+  padding: 0.6rem 1.2rem;
+  margin-right: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.wishlist-button:hover,
-.rate-button:hover {
-  background-color: #3a3a3a;
-}
-
-.divider {
-  opacity: 0.5;
-}
-
-.starNumber {
-  display: flex;
-  align-items: center;
-  color: gold;
   font-weight: bold;
-}
-
-.movie-info {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
   color: white;
-  font-family: system-ui, sans-serif;
-  line-height: 1.5;
+  text-decoration: none;
 }
 
-.movie-title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: -1rem;
-}
-
-.movie-genres {
-  font-size: 1rem;
-  color: #cccccc;
-  margin-bottom: -1rem;
-}
-
-.movie-rating {
-  font-size: 1rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  color: gold;
-  margin-bottom: -1rem;
-}
-
-.movie-runtime {
-  font-size: 1rem;
-  color: #cccccc;
+.details-btn:hover {
+  color: #f39c12;
 }

@@ -1,13 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/index.css";
+import { useUrlMovieStore } from "../store/useUrlMovieStore";
+import "../styles/slider.css";
 
-const API_TOKEN = import.meta.env.VITE_API_TOKEN;
-
-export default function MovieList({ url }) {
-  const [movie, setMovie] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+export default function MovieList({ url, title }) {
+  const { movies, loading, error, fetchMovies } = useUrlMovieStore();
   const navigate = useNavigate();
 
   function handleClick(m) {
@@ -15,72 +12,32 @@ export default function MovieList({ url }) {
   }
 
   useEffect(() => {
-    async function fetchMovie() {
-      setLoading(true);
-      setError(null);
+    fetchMovies(url);
+  }, [url, fetchMovies]);
 
-      try {
-        const res = await fetch(url, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`,
-            Accept: "application/json",
-          },
-        });
-
-        const data = await res.json();
-
-        if (!data.results || data.results.length === 0) {
-          setError("No movies found.");
-          setMovie(null);
-        } else {
-          setMovie(data.results);
-        }
-      } catch (err) {
-        setError("Failed to fetch data.");
-        setMovie(null);
-      }
-
-      setLoading(false);
-    }
-
-    fetchMovie();
-  }, []);
+  const movieList = movies[url] || [];
 
   return (
-    <div className="movie-scroll-container">
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {movie &&
-        movie.map((m) => (
-          <div
-            key={m.id}
-            style={{
-              width: "150px",
-              textAlign: "center",
-              margin: "0 10px",
-            }}
-          >
-            <img
-              src={`https://image.tmdb.org/t/p/w300${m.poster_path}`}
-              alt={m.title}
-              style={{
-                width: "150px",
-                height: "225px",
-                objectFit: "cover",
-                borderRadius: "8px",
-                cursor: "pointer",
-                transition: "transform 0.3s ease-in-out",
-              }}
-              onClick={() => handleClick(m)}
-              onError={(e) => {
-                e.target.src =
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoWcWg0E8pSjBNi0TtiZsqu8uD2PAr_K11DA&s";
-              }}
-            />
-            <h5 style={{ fontSize: "14px", marginTop: "0.5rem" }}>{m.title}</h5>
-          </div>
-        ))}
+    <div className="movie-slider">
+      {title && <h2>{title}</h2>}
+      <div className="movie-scroll-container">
+        {loading && <p>Loading...</p>}
+        {error && <p className="error-text">{error}</p>}
+        {movieList &&
+          movieList.map((m) => (
+            <div key={m.id} className="movie-card" onClick={() => handleClick(m)}>
+              <img
+                src={`https://image.tmdb.org/t/p/w300${m.poster_path}`}
+                alt={m.title}
+                onError={(e) => {
+                  e.target.src =
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoWcWg0E8pSjBNi0TtiZsqu8uD2PAr_K11DA&s";
+                }}
+              />
+              <h5>{m.title}</h5>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

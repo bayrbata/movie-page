@@ -1,121 +1,104 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "../lib/supabase";
 import { FcGoogle } from "react-icons/fc";
 import { RiFacebookCircleFill } from "react-icons/ri";
-import { toast } from "react-toastify";
+import { FiSearch } from "react-icons/fi";
+import { CiLogin, CiLogout } from "react-icons/ci";
+import { useLocation } from "react-router-dom";
+import useAuthStore from "../store/useAuthStore";
+import "../styles/header.css";
 
 export default function Header() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const { user, authListener, login, logout } = useAuthStore();
+  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
-
-    return () => {
-      listener?.subscription?.unsubscribe();
-    };
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleLogin = async (provider) => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: window.location.href,
-      },
-    });
+  const isHome = location.pathname === "/";
 
-    if (error) {
-      alert("Login failed");
-    }
-
-    toast.success("Success login");
-  };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    toast.success("Success logout!");
-    navigate(`/`);
-  };
+  useEffect(() => {
+    const cleanUp = authListener();
+    return cleanUp;
+  }, [authListener]);
 
   const handleSearch = (e) => {
-    if (e.key === "Enter") {
-      console.log("Searching for:", search);
+    if (e.key === "Enter" && search.trim()) {
       navigate(`/movies/${encodeURIComponent(search.trim())}`);
     }
   };
 
   return (
     <header
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "1rem",
-        backgroundColor: "black",
-      }}
+      className={`navbar ${isHome ? "transparent" : "solid"} ${
+        scrolled ? "scrolled" : ""
+      }`}
     >
-      <nav>
-        <Link
-          to="/"
-          style={{
-            marginRight: "1rem",
-            color: "white",
-            textDecoration: "none",
-          }}
-        >
-          Home
-        </Link>
+      <div className="left-section">
+        <nav className="nav-links">
+          <Link to="/">Home</Link>
+          {user && <Link to="/watchlist">Watchlist</Link>}
+        </nav>
+      </div>
 
+      <div className="search-container">
+        <FiSearch className="search-icon" />
+        <input
+          type="text"
+          placeholder="Search movies..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={handleSearch}
+        />
+      </div>
+
+      <div className="auth-section">
         {user ? (
-          <Link
-            to="/watchlist"
-            style={{
-              marginRight: "1rem",
-              color: "white",
-              textDecoration: "none",
-            }}
-          >
-            Watchlist
-          </Link>
-        ) : null}
-      </nav>
-
-      <input
-        type="text"
-        placeholder="Search movies..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        onKeyDown={handleSearch}
-        style={{
-          padding: "6px 10px",
-          borderRadius: "4px",
-          border: "1px solid #ccc",
-        }}
-      />
-      {user ? (
-        <div>
-          <span style={{ marginRight: "1rem" }}>{user.user_metadata.name}</span>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      ) : (
-        <div>
-          Login
-          <button onClick={() => handleLogin("google")}>
-            <FcGoogle />
-          </button>
-          /
-          <button onClick={() => handleLogin("facebook")}>
-            <RiFacebookCircleFill />
-          </button>
-        </div>
-      )}
+          <>
+            {user?.user_metadata?.picture ? (
+              <img
+                className="profile"
+                src={user?.user_metadata?.picture}
+                alt="profile_picture"
+              />
+            ) : (
+              <img
+                className="profile"
+                src="https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3485.jpg?w=360"
+                alt="profile_picture"
+              />
+            )}
+            <span>{user.user_metadata.name}</span>
+            <button
+              className="logout-btn"
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
+            >
+              <CiLogout size={28} />
+            </button>
+          </>
+        ) : (
+          <div className="login">
+            <CiLogin size={28} />
+            <div className="social-buttons">
+              <button className="google" onClick={() => login("google")}>
+                <FcGoogle size={28} />
+              </button>
+              <button className="facebook" onClick={() => login("facebook")}>
+                <RiFacebookCircleFill size={28} />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

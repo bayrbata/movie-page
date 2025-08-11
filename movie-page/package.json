@@ -22,7 +22,10 @@
     "react-player": "^3.3.1",
     "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^7.7.1",
-    "react-toastify": "^11.0.5"
+    "react-slick": "^0.31.0",
+    "react-toastify": "^11.0.5",
+    "slick-carousel": "^1.8.1",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
