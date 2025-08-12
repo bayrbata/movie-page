@@ -1,0 +1,30 @@
+.movieSearchWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.movieCard {
+  width: 150px;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.movieImage {
+  width: 150px;
+  height: 225px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.movieTitle {
+  font-size: 14px;
+  margin-top: 0.5rem;
+  height: 50px;
+}
+
+.errorText {
+  color: red;
+}

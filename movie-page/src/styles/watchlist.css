@@ -1,0 +1,35 @@
+.watchlist-container {
+  padding: 1rem;
+  margin-top: 4rem;
+}
+
+.watchlist-error {
+  color: red;
+}
+
+.watchlist-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.watchlist-item {
+  width: 150px;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.watchlist-poster {
+  width: 150px;
+  height: 225px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.watchlist-title {
+  font-size: 14px;
+  margin-top: 0.5rem;
+  width: 150px;
+}
