@@ -1,0 +1,152 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 2rem;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar.transparent {
+  position: fixed;
+  background: transparent;
+  color: white;
+}
+
+.navbar.solid {
+  position: fixed;
+  background: black;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.navbar.scrolled {
+  background: black;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.nav-links a {
+  margin: 0 0.8rem;
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #f39c12;
+}
+
+.search-container {
+  background: transparent;
+  color: white;
+  display: flex;
+  position: relative;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 35px;
+  padding: 0.2rem 1rem;
+}
+
+.search-container:hover {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  color: white;
+  pointer-events: none;
+}
+.search-container input {
+  background-color: white;
+  color: white;
+  background: transparent;
+  padding: 6px 30px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.search-container input::placeholder {
+  color: white;
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+}
+
+.auth-section span {
+  margin-right: 0.5rem;
+}
+
+.auth-section button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding-right: 3rem;
+}
+
+.logout-btn {
+  justify-content: center;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transition: background 0.2s ease;
+}
+
+.logout-btn:hover {
+  color: #f39c12;
+}
+
+.login {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 75px;
+}
+
+.login .social-buttons {
+  display: flex;
+  gap: 0.25rem;
+  position: absolute;
+  left: 120%;
+  top: 50%;
+  transform: translateY(-45%) translateX(-25px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.login:hover .social-buttons {
+  opacity: 1;
+  transform: translateY(-45%) translateX(-125px);
+}
+
+.google {
+  padding-right: 0 !important;
+}
+.facebook {
+  padding-right: 0 !important;
+}
+
+.profile {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}

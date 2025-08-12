@@ -1,34 +1,33 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useSearchStore from "../store/useSearchStore";
-import "../styles/movieSearch.css";
+import useFetchWatchlistStore from "../store/useFetchWatchlistStore";
+import "../styles/watchlist.css";
 
-export default function MovieSearch({ query }) {
-  const { resultsCache, loading, error, searchMovies } = useSearchStore();
+export default function WatchList() {
+  const { movies, loading, error, fetchWatchlist } = useFetchWatchlistStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchWatchlist();
+  }, [fetchWatchlist]);
 
   function handleClick(m) {
     navigate(`/movie-detail/${encodeURIComponent(m.id)}`);
   }
 
-  useEffect(() => {
-    searchMovies(query);
-  }, [query, searchMovies]);
-
-  const movies = resultsCache[query] || [];
-
   return (
-    <div className="movieSearchWrapper">
-      {loading && <p>Loading...</p>}
-      {error && <p className="errorText">{error}</p>}
-      {movies &&
-        movies.map((m) => (
-          <div key={m.id} className="movieCard">
+    <div className="watchlist-container">
+      {loading && <p className="watchlist-loading">Loading...</p>}
+      {error && <p className="watchlist-error">{error}</p>}
+
+      <div className="watchlist-grid">
+        {movies.map((m) => (
+          <div key={m.id} className="watchlist-item">
             {m.poster_path && (
               <img
                 src={`https://image.tmdb.org/t/p/w300${m.poster_path}`}
                 alt={m.title}
-                className="movieImage"
+                className="watchlist-poster"
                 onClick={() => handleClick(m)}
                 onError={(e) => {
                   e.target.src =
@@ -36,9 +35,10 @@ export default function MovieSearch({ query }) {
                 }}
               />
             )}
-            <h5 className="movieTitle">{m.title}</h5>
+            <h5 className="watchlist-title">{m.title}</h5>
           </div>
         ))}
+      </div>
     </div>
   );
 }
