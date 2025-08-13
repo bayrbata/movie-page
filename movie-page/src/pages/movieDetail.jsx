@@ -57,6 +57,18 @@ export default function MovieDetail() {
     }
   }, [movie, user, checkAddedWatchlist, id]);
 
+  const loopedTrailers = [...trailer, ...trailer, ...trailer];
+
+  useEffect(() => {
+    const container = scrollRef.current;
+
+    if (!container) return;
+    if (container.scrollWidth === 0 || container.clientWidth === 0) return;
+
+    const halfScroll = container.scrollWidth / 2 - container.clientWidth / 2;
+    container.scrollLeft = halfScroll;
+  }, [trailer]);
+
   return (
     <div className="detail-container">
       {movie && (
@@ -66,14 +78,12 @@ export default function MovieDetail() {
               <IoArrowBack />
             </button>
             <div ref={scrollRef} className="trailer-scroll-container">
-              {trailer.length > 0 ? (
-                trailer.map((key) => (
+              {loopedTrailers.length > 0 ? (
+                loopedTrailers.map((key, i) => (
                   <iframe
-                    key={key}
-                    width="100%"
-                    height="580px"
+                    key={`${key}-${i}`}
                     src={`https://www.youtube.com/embed/${key}`}
-                    title={`${movie.title} trailer`}
+                    title={`${movie.title} trailer ${i}`}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -140,7 +150,7 @@ export default function MovieDetail() {
             <SideDetail id={id} />
           </div>
 
-          <nav style={{ marginTop: "1rem", marginBottom: "1.5rem" }}>
+          <nav style={{ margin: "1rem" }}>
             <button
               onClick={() => setActiveTab("images")}
               className={`tab-button ${activeTab === "images" ? "active" : ""}`}

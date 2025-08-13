@@ -29,9 +29,6 @@ export default function RateModal({ open, onClose, movieId }) {
 
     if (error) {
       toast.error("Failed to save rating");
-    } else {
-      toast.success("Rating saved");
-      onClose();
     }
   };
 

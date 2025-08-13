@@ -16,7 +16,7 @@ const useRatingStore = create((set) => ({
         .eq("user_id", userId)
         .eq("movie_id", movieId)
         .maybeSingle();
-
+        
       if (error) throw error;
 
       set({ rating: data ? data.rating : 0 });

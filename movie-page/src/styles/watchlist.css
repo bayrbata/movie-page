@@ -16,7 +16,11 @@
 .watchlist-item {
   width: 150px;
   text-align: center;
-  margin: 0 10px;
+}
+
+.watchlist-item:hover {
+  transition: transform 0.3s ease-in-out;
+  transform: scale(1.05);
 }
 
 .watchlist-poster {
@@ -30,6 +34,8 @@
 
 .watchlist-title {
   font-size: 14px;
-  margin-top: 0.5rem;
-  width: 150px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

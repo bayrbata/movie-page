@@ -6,7 +6,7 @@ export default function Movies() {
 
   return (
     <div style={{ marginTop: "5rem" }}>
-      <h1>Movie Search</h1>
+      <h1 style={{paddingLeft:"1rem", textTransform: "uppercase"}}>Movie Search : {query}</h1>
       <MovieSearch query={query} />
     </div>
   );

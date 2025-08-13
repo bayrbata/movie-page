@@ -33,7 +33,7 @@ export default function Header() {
       navigate(`/movies/${encodeURIComponent(search.trim())}`);
     }
   };
-
+  
   return (
     <header
       className={`navbar ${isHome ? "transparent" : "solid"} ${

@@ -23,7 +23,6 @@
 .trailer-btn-right {
   right: 0;
 }
-
 .trailer-scroll-container {
   display: flex;
   overflow-x: auto;
@@ -41,7 +40,10 @@
 
 .trailer-scroll-container iframe {
   flex: 0 0 auto;
-  scroll-snap-align: start;
+  width: 960px;
+  height: 540px;
+  max-width: 100%;
+  scroll-snap-align: center;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
@@ -49,14 +51,17 @@
 .trailer-placeholder {
   background-size: cover;
   background-position: center;
-  height: 580px;
-  width: 100%;
+  width: 960px;
+  height: 540px;
   border-radius: 8px;
   opacity: 0.8;
+  flex: 0 0 auto;
+  scroll-snap-align: center;
 }
 
+
 .movie-info {
-  margin-top: 1rem;
+  padding-left: 1rem;
   color: white;
   font-family: system-ui, sans-serif;
   line-height: 1.5;
@@ -65,7 +70,7 @@
 .movie-title {
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: -1rem;
+  margin: 0;
 }
 
 .movie-genres {
@@ -87,6 +92,7 @@
 .movie-runtime {
   font-size: 1rem;
   color: #cccccc;
+  margin-bottom: 0;
 }
 
 .star {
@@ -101,6 +107,7 @@
 }
 
 .overview-section {
+  padding: 1rem;
   border-right: 2px solid gray;
   flex: 1;
 }
