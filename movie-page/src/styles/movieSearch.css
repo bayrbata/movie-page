@@ -2,12 +2,13 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .movieCard {
   width: 150px;
   text-align: center;
-  margin: 0 10px;
 }
 
 .movieImage {
@@ -21,8 +22,15 @@
 
 .movieTitle {
   font-size: 14px;
-  margin-top: 0.5rem;
-  height: 50px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movieCard:hover {
+  transition: transform 0.3s ease-in-out;
+  transform: scale(1.05);
 }
 
 .errorText {

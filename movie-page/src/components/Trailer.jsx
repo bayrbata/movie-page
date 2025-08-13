@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useUrlMovieStore } from "../store/useUrlMovieStore";
 import useAllTrailerStore from "../store/useAllTrailerStore";
+import "../styles/slider.css"
 
 export default function TrailerList({ url }) {
   const { movies, loading, error, fetchMovies } = useUrlMovieStore();
@@ -31,12 +32,12 @@ export default function TrailerList({ url }) {
         const trailer = trailersMap[movie.id];
 
         return (
-          <div key={movie.id} style={{ marginBottom: "2rem" }}>
+          <div key={movie.id} className="trailerCard">
             {trailer ? (
               <>
                 <iframe
-                  width="300"
-                  height="170"
+                  width="320"
+                  height="210"
                   src={`https://www.youtube.com/embed/${trailer.trailerKey}`}
                   title={`${trailer.title} trailer`}
                   frameBorder="0"
